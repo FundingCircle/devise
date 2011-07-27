@@ -10,8 +10,8 @@ class ActionDispatch::IntegrationTest
       user = User.create!(
         :username => 'usertest',
         :email => options[:email] || 'user@test.com',
-        :password => options[:password] || '123456',
-        :password_confirmation => options[:password] || '123456',
+        :login_password => options[:login_password] || '123456',
+        :password_confirmation => options[:login_password] || '123456',
         :created_at => Time.now.utc
       )
       user.confirm! unless options[:confirm] == false
@@ -23,7 +23,7 @@ class ActionDispatch::IntegrationTest
   def create_admin(options={})
     @admin ||= begin
       admin = Admin.create!(
-        :email => 'admin@test.com', :password => '123456', :password_confirmation => '123456'
+        :email => 'admin@test.com', :login_password => '123456', :password_confirmation => '123456'
       )
       admin
     end
@@ -33,7 +33,7 @@ class ActionDispatch::IntegrationTest
     user = create_user(options)
     visit_with_option options[:visit], new_user_session_path
     fill_in 'email', :with => options[:email] || 'user@test.com'
-    fill_in 'password', :with => options[:password] || '123456'
+    fill_in 'login password', :with => options[:login_password] || '123456'
     check 'remember me' if options[:remember_me] == true
     yield if block_given?
     click_button 'Sign In'
@@ -44,7 +44,7 @@ class ActionDispatch::IntegrationTest
     admin = create_admin(options)
     visit_with_option options[:visit], new_admin_session_path
     fill_in 'email', :with => 'admin@test.com'
-    fill_in 'password', :with => '123456'
+    fill_in 'login password', :with => '123456'
     yield if block_given?
     click_button 'Sign In'
     admin

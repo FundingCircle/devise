@@ -20,16 +20,16 @@ module Devise
       extend ActiveSupport::Concern
 
       included do
-        attr_reader :password, :current_password
+        attr_reader :login_password, :current_password
         attr_accessor :password_confirmation
         before_validation :downcase_keys
         before_validation :strip_whitespace
       end
 
       # Generates password encryption based on the given value.
-      def password=(new_password)
-        @password = new_password
-        self.encrypted_password = password_digest(@password) if @password.present?
+      def login_password=(new_password)
+        @login_password = new_password
+        self.encrypted_password = password_digest(@login_password) if @login_password.present?
       end
 
       # Verifies whether an password (ie from sign in) is the user password.
@@ -42,7 +42,7 @@ module Devise
 
       # Set password and password confirmation to nil
       def clean_up_passwords
-        self.password = self.password_confirmation = ""
+        self.login_password = self.password_confirmation = ""
       end
 
       # Update record attributes when :current_password matches, otherwise returns
@@ -51,8 +51,8 @@ module Devise
       def update_with_password(params={})
         current_password = params.delete(:current_password)
 
-        if params[:password].blank?
-          params.delete(:password)
+        if params[:login_password].blank?
+          params.delete(:login_password)
           params.delete(:password_confirmation) if params[:password_confirmation].blank?
         end
 
@@ -72,7 +72,7 @@ module Devise
       # Updates record attributes without asking for the current password.
       # Never allows to change the current password
       def update_without_password(params={})
-        params.delete(:password)
+        params.delete(:login_password)
         params.delete(:password_confirmation)
 
         result = update_attributes(params)

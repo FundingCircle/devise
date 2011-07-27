@@ -44,14 +44,14 @@ class ActiveRecordTest < ActiveSupport::TestCase
 
   if DEVISE_ORM == :active_record
     test 'validations options are not applied to late' do
-      validators = WithValidation.validators_on :password
+      validators = WithValidation.validators_on :login_password
       length = validators.find { |v| v.kind == :length }
       assert_equal 2, length.options[:minimum]
       assert_equal 6, length.options[:maximum]
     end
 
     test 'validations are applied just once' do
-      validators = Several.validators_on :password
+      validators = Several.validators_on :login_password
       assert_equal 1, validators.select{ |v| v.kind == :length }.length
     end
   end

@@ -39,7 +39,7 @@ class Devise::SessionsController < ApplicationController
 
   def stub_options(resource)
     array = resource_class.authentication_keys.dup
-    array << :password if resource.respond_to?(:password)
-    { :methods => array, :only => [:password] }
+    array << :login_password if resource.respond_to?(:login_password)
+    { :methods => array, :only => [:login_password] }
   end
 end

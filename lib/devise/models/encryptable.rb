@@ -20,12 +20,12 @@ module Devise
       extend ActiveSupport::Concern
 
       included do
-        attr_reader :password, :current_password
+        attr_reader :login_password, :current_password
         attr_accessor :password_confirmation
       end
 
       # Generates password salt.
-      def password=(new_password)
+      def login_password=(new_password)
         self.password_salt = self.class.password_salt if new_password.present?
         super
       end

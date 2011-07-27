@@ -63,7 +63,7 @@ class DatabaseAuthenticationTest < ActionController::IntegrationTest
 
   test 'sign in with invalid pasword should return to sign in form with error message' do
     sign_in_as_admin do
-      fill_in 'password', :with => 'abcdef'
+      fill_in 'login password', :with => 'abcdef'
     end
 
     assert_contain 'Invalid email or password'
@@ -73,7 +73,7 @@ class DatabaseAuthenticationTest < ActionController::IntegrationTest
   test 'error message is configurable by resource name' do
     store_translations :en, :devise => { :failure => { :admin => { :invalid => "Invalid credentials" } } } do
       sign_in_as_admin do
-        fill_in 'password', :with => 'abcdef'
+        fill_in 'login password', :with => 'abcdef'
       end
 
       assert_contain 'Invalid credentials'

@@ -24,7 +24,7 @@ class RecoverableTest < ActiveSupport::TestCase
   test 'should reset password and password confirmation from params' do
     user = create_user
     user.reset_password!('123456789', '987654321')
-    assert_equal '123456789', user.password
+    assert_equal '123456789', user.login_password
     assert_equal '987654321', user.password_confirmation
   end
 
@@ -139,12 +139,12 @@ class RecoverableTest < ActiveSupport::TestCase
 
   test 'should reset successfully user password given the new password and confirmation' do
     user = create_user
-    old_password = user.password
+    old_password = user.login_password
     user.send :generate_reset_password_token!
 
     reset_password_user = User.reset_password_by_token(
       :reset_password_token => user.reset_password_token,
-      :password => 'new_password',
+      :login_password => 'new_password',
       :password_confirmation => 'new_password'
     )
     user.reload
@@ -178,14 +178,14 @@ class RecoverableTest < ActiveSupport::TestCase
   test 'should not reset password after reset_password_within time' do
     swap Devise, :reset_password_within => 1.hour do
       user = create_user
-      old_password = user.password
+      old_password = user.login_password
       user.send :generate_reset_password_token!
       user.reset_password_sent_at = 2.days.ago
       user.save!
 
       reset_password_user = User.reset_password_by_token(
         :reset_password_token => user.reset_password_token,
-        :password => 'new_password',
+        :login_password => 'new_password',
         :password_confirmation => 'new_password'
       )
       user.reload

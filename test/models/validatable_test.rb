@@ -47,61 +47,61 @@ class ValidatableTest < ActiveSupport::TestCase
   end
 
   test 'should require password to be set when creating a new record' do
-    user = new_user(:password => '', :password_confirmation => '')
+    user = new_user(:login_password => '', :password_confirmation => '')
     assert user.invalid?
-    assert_equal 'can\'t be blank', user.errors[:password].join
+    assert_equal 'can\'t be blank', user.errors[:login_password].join
   end
 
   test 'should require confirmation to be set when creating a new record' do
-    user = new_user(:password => 'new_password', :password_confirmation => 'blabla')
+    user = new_user(:login_password => 'new_password', :password_confirmation => 'blabla')
     assert user.invalid?
-    assert_equal 'doesn\'t match confirmation', user.errors[:password].join
+    assert_equal 'doesn\'t match confirmation', user.errors[:login_password].join
   end
 
   test 'should require password when updating/reseting password' do
     user = create_user
 
-    user.password = ''
+    user.login_password = ''
     user.password_confirmation = ''
 
     assert user.invalid?
-    assert_equal 'can\'t be blank', user.errors[:password].join
+    assert_equal 'can\'t be blank', user.errors[:login_password].join
   end
 
   test 'should require confirmation when updating/reseting password' do
     user = create_user
     user.password_confirmation = 'another_password'
     assert user.invalid?
-    assert_equal 'doesn\'t match confirmation', user.errors[:password].join
+    assert_equal 'doesn\'t match confirmation', user.errors[:login_password].join
   end
 
   test 'should require a password with minimum of 6 characters' do
-    user = new_user(:password => '12345', :password_confirmation => '12345')
+    user = new_user(:login_password => '12345', :password_confirmation => '12345')
     assert user.invalid?
-    assert_equal 'is too short (minimum is 6 characters)', user.errors[:password].join
+    assert_equal 'is too short (minimum is 6 characters)', user.errors[:login_password].join
   end
 
   test 'should require a password with maximum of 128 characters long' do
-    user = new_user(:password => 'x'*129, :password_confirmation => 'x'*129)
+    user = new_user(:login_password => 'x'*129, :password_confirmation => 'x'*129)
     assert user.invalid?
-    assert_equal 'is too long (maximum is 128 characters)', user.errors[:password].join
+    assert_equal 'is too long (maximum is 128 characters)', user.errors[:login_password].join
   end
 
   test 'should not require password length when it\'s not changed' do
     user = create_user.reload
-    user.password = user.password_confirmation = nil
+    user.login_password = user.password_confirmation = nil
     assert user.valid?
 
     user.password_confirmation = 'confirmation'
     assert user.invalid?
-    assert_not (user.errors[:password].join =~ /is too long/)
+    assert_not (user.errors[:login_password].join =~ /is too long/)
   end
 
   test 'should complain about length even if possword is not required' do
-    user = new_user(:password => 'x'*129, :password_confirmation => 'x'*129)
+    user = new_user(:login_password => 'x'*129, :password_confirmation => 'x'*129)
     user.stubs(:password_required?).returns(false)
     assert user.invalid?
-    assert_equal 'is too long (maximum is 128 characters)', user.errors[:password].join
+    assert_equal 'is too long (maximum is 128 characters)', user.errors[:login_password].join
   end
 
   test 'shuold not be included in objects with invalid API' do

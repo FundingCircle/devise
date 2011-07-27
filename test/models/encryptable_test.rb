@@ -37,14 +37,14 @@ class EncryptableTest < ActiveSupport::TestCase
   end
 
   test 'should not generate salt if password is blank' do
-    assert_blank create_admin(:password => nil).password_salt
-    assert_blank create_admin(:password => '').password_salt
+    assert_blank create_admin(:login_password => nil).password_salt
+    assert_blank create_admin(:login_password => '').password_salt
   end
 
   test 'should encrypt password again if password has changed' do
     admin = create_admin
     encrypted_password = admin.encrypted_password
-    admin.password = admin.password_confirmation = 'new_password'
+    admin.login_password = admin.password_confirmation = 'new_password'
     admin.save!
     assert_not_equal encrypted_password, admin.encrypted_password
   end

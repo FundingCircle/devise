@@ -8,7 +8,7 @@ class SessionsControllerTest < ActionController::TestCase
     request.env["devise.mapping"] = Devise.mappings[:user]
     post :create, :user => {
       :email => "nosuchuser@example.com",
-      :password => "wevdude"
+      :login_password => "wevdude"
     }
     assert_equal 200, @response.status
     assert_template "devise/sessions/new"

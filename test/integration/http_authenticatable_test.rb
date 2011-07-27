@@ -67,9 +67,9 @@ class HttpAuthenticationTest < ActionController::IntegrationTest
 
   private
 
-    def sign_in_as_new_user_with_http(username="user@test.com", password="123456")
+    def sign_in_as_new_user_with_http(username="user@test.com", login_password="123456")
       user = create_user
-      get users_path(:format => :xml), {}, "HTTP_AUTHORIZATION" => "Basic #{ActiveSupport::Base64.encode64("#{username}:#{password}")}"
+      get users_path(:format => :xml), {}, "HTTP_AUTHORIZATION" => "Basic #{ActiveSupport::Base64.encode64("#{username}:#{login_password}")}"
       user
     end
 

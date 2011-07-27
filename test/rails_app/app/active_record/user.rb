@@ -4,5 +4,5 @@ class User < ActiveRecord::Base
   include Shim
   include SharedUser
 
-  attr_accessible :username, :email, :password, :password_confirmation, :remember_me
+  attr_accessible :username, :email, :login_password, :password_confirmation, :remember_me
 end
