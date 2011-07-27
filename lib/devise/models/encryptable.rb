@@ -21,7 +21,7 @@ module Devise
 
       included do
         attr_reader :login_password, :current_password
-        attr_accessor :password_confirmation
+        attr_accessor :login_password_confirmation
       end
 
       # Generates password salt.

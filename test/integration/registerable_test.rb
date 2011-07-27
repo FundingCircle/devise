@@ -9,8 +9,8 @@ class RegistrationTest < ActionController::IntegrationTest
     assert_template 'registrations/new'
 
     fill_in 'email', :with => 'new_user@test.com'
-    fill_in 'login_password', :with => 'new_user123'
-    fill_in 'password confirmation', :with => 'new_user123'
+    fill_in 'login password', :with => 'new_user123'
+    fill_in 'login password confirmation', :with => 'new_user123'
     click_button 'Sign up'
 
     assert_contain 'Welcome! You have signed up successfully.'
@@ -27,8 +27,8 @@ class RegistrationTest < ActionController::IntegrationTest
     click_link 'Sign up'
 
     fill_in 'email', :with => 'new_user@test.com'
-    fill_in 'login_password', :with => 'new_user123'
-    fill_in 'password confirmation', :with => 'new_user123'
+    fill_in 'login password', :with => 'new_user123'
+    fill_in 'login password confirmation', :with => 'new_user123'
     click_button 'Sign up'
 
     assert_contain 'Welcome! You have signed up successfully.'
@@ -40,8 +40,8 @@ class RegistrationTest < ActionController::IntegrationTest
     get new_user_registration_path
 
     fill_in 'email', :with => 'new_user@test.com'
-    fill_in 'login_password', :with => 'new_user123'
-    fill_in 'password confirmation', :with => 'new_user123'
+    fill_in 'login password', :with => 'new_user123'
+    fill_in 'login password confirmation', :with => 'new_user123'
     click_button 'Sign up'
 
     assert_contain 'You have signed up successfully. However, we could not sign you in because your account is unconfirmed.'
@@ -60,8 +60,8 @@ class RegistrationTest < ActionController::IntegrationTest
     get new_user_registration_path
 
     fill_in 'email', :with => 'new_user@test.com'
-    fill_in 'login_password', :with => 'new_user123'
-    fill_in 'password confirmation', :with => 'new_user123'
+    fill_in 'login password', :with => 'new_user123'
+    fill_in 'login password confirmation', :with => 'new_user123'
     click_button 'Sign up'
 
     assert_current_url "/?custom=1"
@@ -72,8 +72,8 @@ class RegistrationTest < ActionController::IntegrationTest
     get new_user_registration_path
 
     fill_in 'email', :with => 'invalid_email'
-    fill_in 'login_password', :with => 'new_user123'
-    fill_in 'password confirmation', :with => 'new_user321'
+    fill_in 'login password', :with => 'new_user123'
+    fill_in 'login password confirmation', :with => 'new_user321'
     click_button 'Sign up'
 
     assert_template 'registrations/new'
@@ -91,8 +91,8 @@ class RegistrationTest < ActionController::IntegrationTest
     get new_user_registration_path
 
     fill_in 'email', :with => 'user@test.com'
-    fill_in 'login_password', :with => '123456'
-    fill_in 'password confirmation', :with => '123456'
+    fill_in 'login password', :with => '123456'
+    fill_in 'login password confirmation', :with => '123456'
     click_button 'Sign up'
 
     assert_current_url '/users'
@@ -132,8 +132,8 @@ class RegistrationTest < ActionController::IntegrationTest
     sign_in_as_user
     get edit_user_registration_path
 
-    fill_in 'login_password', :with => '12345678'
-    fill_in 'password confirmation', :with => '12345678'
+    fill_in 'login password', :with => '12345678'
+    fill_in 'login password confirmation', :with => '12345678'
     fill_in 'current password', :with => '123456'
     click_button 'Update'
 
@@ -161,8 +161,8 @@ class RegistrationTest < ActionController::IntegrationTest
     sign_in_as_user
     get edit_user_registration_path
 
-    fill_in 'login_password', :with => 'pas123'
-    fill_in 'password confirmation', :with => 'pas123'
+    fill_in 'login password', :with => 'pas123'
+    fill_in 'login password confirmation', :with => 'pas123'
     fill_in 'current password', :with => '123456'
     click_button 'Update'
 
@@ -176,8 +176,8 @@ class RegistrationTest < ActionController::IntegrationTest
     sign_in_as_user
     get edit_user_registration_path
 
-    fill_in 'login_password', :with => 'pas123'
-    fill_in 'password confirmation', :with => ''
+    fill_in 'login password', :with => 'pas123'
+    fill_in 'login password confirmation', :with => ''
     fill_in 'current password', :with => '123456'
     click_button 'Update'
 
@@ -222,7 +222,7 @@ class RegistrationTest < ActionController::IntegrationTest
   end
 
   test 'an admin sign up with valid information in XML format should return valid response' do
-    post admin_registration_path(:format => 'xml'), :admin => { :email => 'new_user@test.com', :login_password => 'new_user123', :password_confirmation => 'new_user123' }
+    post admin_registration_path(:format => 'xml'), :admin => { :email => 'new_user@test.com', :login_password => 'new_user123', :login_password_confirmation => 'new_user123' }
     assert_response :success
     assert response.body.include? %(<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<admin>)
 
@@ -231,7 +231,7 @@ class RegistrationTest < ActionController::IntegrationTest
   end
 
   test 'a user sign up with valid information in XML format should return valid response' do
-    post user_registration_path(:format => 'xml'), :user => { :email => 'new_user@test.com', :login_password => 'new_user123', :password_confirmation => 'new_user123' }
+    post user_registration_path(:format => 'xml'), :user => { :email => 'new_user@test.com', :login_password => 'new_user123', :login_password_confirmation => 'new_user123' }
     assert_response :success
     assert response.body.include? %(<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<user>)
 
@@ -240,7 +240,7 @@ class RegistrationTest < ActionController::IntegrationTest
   end
 
   test 'a user sign up with invalid information in XML format should return invalid response' do
-    post user_registration_path(:format => 'xml'), :user => { :email => 'new_user@test.com', :login_password => 'new_user123', :password_confirmation => 'invalid' }
+    post user_registration_path(:format => 'xml'), :user => { :email => 'new_user@test.com', :login_password => 'new_user123', :login_password_confirmation => 'invalid' }
     assert_response :unprocessable_entity
     assert response.body.include? %(<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<errors>)
   end

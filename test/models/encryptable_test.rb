@@ -44,7 +44,7 @@ class EncryptableTest < ActiveSupport::TestCase
   test 'should encrypt password again if password has changed' do
     admin = create_admin
     encrypted_password = admin.encrypted_password
-    admin.login_password = admin.password_confirmation = 'new_password'
+    admin.login_password = admin.login_password_confirmation = 'new_password'
     admin.save!
     assert_not_equal encrypted_password, admin.encrypted_password
   end

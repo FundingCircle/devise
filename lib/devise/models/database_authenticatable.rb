@@ -21,7 +21,7 @@ module Devise
 
       included do
         attr_reader :login_password, :current_password
-        attr_accessor :password_confirmation
+        attr_accessor :login_password_confirmation
         before_validation :downcase_keys
         before_validation :strip_whitespace
       end
@@ -42,18 +42,18 @@ module Devise
 
       # Set password and password confirmation to nil
       def clean_up_passwords
-        self.login_password = self.password_confirmation = ""
+        self.login_password = self.login_password_confirmation = ""
       end
 
       # Update record attributes when :current_password matches, otherwise returns
       # error on :current_password. It also automatically rejects :password and
-      # :password_confirmation if they are blank.
+      # :login_password_confirmation if they are blank.
       def update_with_password(params={})
         current_password = params.delete(:current_password)
 
         if params[:login_password].blank?
           params.delete(:login_password)
-          params.delete(:password_confirmation) if params[:password_confirmation].blank?
+          params.delete(:login_password_confirmation) if params[:login_password_confirmation].blank?
         end
 
         result = if valid_password?(current_password)
@@ -73,7 +73,7 @@ module Devise
       # Never allows to change the current password
       def update_without_password(params={})
         params.delete(:login_password)
-        params.delete(:password_confirmation)
+        params.delete(:login_password_confirmation)
 
         result = update_attributes(params)
         clean_up_passwords

@@ -6,7 +6,7 @@ module Devise
     # parameters both from params or from http authorization headers. See database_authenticatable
     # for an example.
     class Authenticatable < Base
-      attr_accessor :authentication_hash, :password
+      attr_accessor :authentication_hash, :login_password
 
       def valid?
         valid_for_params_auth? || valid_for_http_auth?
@@ -79,7 +79,7 @@ module Devise
 
       # Extract a hash with attributes:values from the http params.
       def http_auth_hash
-        keys = [authentication_keys.first, :password]
+        keys = [authentication_keys.first, :login_password]
         Hash[*keys.zip(decode_credentials).flatten]
       end
 
@@ -105,7 +105,7 @@ module Devise
 
       # Check if password is present and is not equal to "X" (default value for token).
       def valid_password?
-        password.present? && password != "X"
+        login_password.present? && login_password != "X"
       end
 
       # Helper to decode credentials from HTTP.
@@ -117,7 +117,7 @@ module Devise
       # Sets the authentication hash and the password from params_auth_hash or http_auth_hash.
       def with_authentication_hash(auth_values)
         self.authentication_hash = {}
-        self.password = auth_values[:password]
+        self.login_password = auth_values[:login_password]
 
         parse_authentication_key_values(auth_values, authentication_keys) &&
         parse_authentication_key_values(request_values, request_keys)

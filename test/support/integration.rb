@@ -11,7 +11,7 @@ class ActionDispatch::IntegrationTest
         :username => 'usertest',
         :email => options[:email] || 'user@test.com',
         :login_password => options[:login_password] || '123456',
-        :password_confirmation => options[:login_password] || '123456',
+        :login_password_confirmation => options[:login_password] || '123456',
         :created_at => Time.now.utc
       )
       user.confirm! unless options[:confirm] == false
@@ -23,7 +23,7 @@ class ActionDispatch::IntegrationTest
   def create_admin(options={})
     @admin ||= begin
       admin = Admin.create!(
-        :email => 'admin@test.com', :login_password => '123456', :password_confirmation => '123456'
+        :email => 'admin@test.com', :login_password => '123456', :login_password_confirmation => '123456'
       )
       admin
     end

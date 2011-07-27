@@ -21,8 +21,8 @@ class DeviseHelperTest < ActionController::IntegrationTest
   test 'test errors.messages.not_saved with single error from i18n' do
     get new_user_registration_path
 
-    fill_in 'login_password', :with => 'new_user123'
-    fill_in 'password confirmation', :with => 'new_user123'
+    fill_in 'login password', :with => 'new_user123'
+    fill_in 'login password confirmation', :with => 'new_user123'
     click_button 'Sign up'
 
     assert_have_selector '#error_explanation'
@@ -33,8 +33,8 @@ class DeviseHelperTest < ActionController::IntegrationTest
     get new_user_registration_path
 
     fill_in 'email', :with => 'invalid_email'
-    fill_in 'login_password', :with => 'new_user123'
-    fill_in 'password confirmation', :with => 'new_user321'
+    fill_in 'login password', :with => 'new_user123'
+    fill_in 'login password confirmation', :with => 'new_user321'
     click_button 'Sign up'
 
     assert_have_selector '#error_explanation'

@@ -7,7 +7,7 @@ module Devise
       def authenticate!
         resource = valid_password? && mapping.to.find_for_database_authentication(authentication_hash)
 
-        if validate(resource){ resource.valid_password?(password) }
+        if validate(resource){ resource.valid_password?(login_password) }
           resource.after_database_authentication
           success!(resource)
         elsif !halted?

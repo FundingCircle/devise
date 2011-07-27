@@ -26,9 +26,9 @@ module Devise
 
       # Update password saving the record and clearing token. Returns true if
       # the passwords are valid and the record was saved, false otherwise.
-      def reset_password!(new_password, new_password_confirmation)
+      def reset_password!(new_password, new_login_password_confirmation)
         self.login_password = new_password
-        self.password_confirmation = new_password_confirmation
+        self.login_password_confirmation = new_login_password_confirmation
         clear_reset_password_token if valid?
         save
       end
@@ -114,7 +114,7 @@ module Devise
           recoverable = find_or_initialize_with_error_by(:reset_password_token, attributes[:reset_password_token])
           if recoverable.persisted?
             if recoverable.reset_password_period_valid?
-              recoverable.reset_password!(attributes[:password], attributes[:password_confirmation]) 
+              recoverable.reset_password!(attributes[:login_password], attributes[:login_password_confirmation]) 
             else
               recoverable.errors.add(:reset_password_token, :expired)
             end

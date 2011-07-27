@@ -199,7 +199,7 @@ class RememberMeTest < ActionController::IntegrationTest
   test 'changing user password expires remember me token' do
     user = create_user_and_remember
     user.login_password = "another_password"
-    user.password_confirmation = "another_password"
+    user.login_password_confirmation = "another_password"
     user.save!
 
     get users_path

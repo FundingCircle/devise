@@ -25,7 +25,7 @@ class RecoverableTest < ActiveSupport::TestCase
     user = create_user
     user.reset_password!('123456789', '987654321')
     assert_equal '123456789', user.login_password
-    assert_equal '987654321', user.password_confirmation
+    assert_equal '987654321', user.login_password_confirmation
   end
 
   test 'should reset password and save the record' do
@@ -145,7 +145,7 @@ class RecoverableTest < ActiveSupport::TestCase
     reset_password_user = User.reset_password_by_token(
       :reset_password_token => user.reset_password_token,
       :login_password => 'new_password',
-      :password_confirmation => 'new_password'
+      :login_password_confirmation => 'new_password'
     )
     user.reload
 
@@ -186,7 +186,7 @@ class RecoverableTest < ActiveSupport::TestCase
       reset_password_user = User.reset_password_by_token(
         :reset_password_token => user.reset_password_token,
         :login_password => 'new_password',
-        :password_confirmation => 'new_password'
+        :login_password_confirmation => 'new_password'
       )
       user.reload
 
