@@ -132,9 +132,9 @@ class RecoverableTest < ActiveSupport::TestCase
     user = create_user
     user.send :generate_reset_password_token!
 
-    reset_password_user = User.reset_password_by_token(:reset_password_token => user.reset_password_token, :password => '')
+    reset_password_user = User.reset_password_by_token(:reset_password_token => user.reset_password_token, :login_password => '')
     assert_not reset_password_user.errors.empty?
-    assert_match "can't be blank", reset_password_user.errors[:password].join
+    assert_match "can't be blank", reset_password_user.errors[:login_password].join
   end
 
   test 'should reset successfully user password given the new password and confirmation' do

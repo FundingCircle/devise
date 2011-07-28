@@ -79,7 +79,7 @@ class RegistrationTest < ActionController::IntegrationTest
     assert_template 'registrations/new'
     assert_have_selector '#error_explanation'
     assert_contain "Email is invalid"
-    assert_contain "Password doesn't match confirmation"
+    assert_contain "Login password doesn't match confirmation"
     assert_contain "2 errors prohibited"
     assert_nil User.first
 
@@ -181,7 +181,7 @@ class RegistrationTest < ActionController::IntegrationTest
     fill_in 'current password', :with => '123456'
     click_button 'Update'
 
-    assert_contain "Password doesn't match confirmation"
+    assert_contain "Login password doesn't match confirmation"
     assert_not User.first.valid_password?('pas123')
   end
 
